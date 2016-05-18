@@ -1,0 +1,1 @@
+Component setup walk-throughs for the Compare system.
