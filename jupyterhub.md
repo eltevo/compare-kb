@@ -4,19 +4,19 @@ JupyterHub without docker and apache
 ---------------------
 
 https://github.com/jupyterhub/jupyterhub/wiki/Using-sudo-to-run-JupyterHub-without-root-privileges
-
-# pip3 install jupyterhub
-
+```
+pip3 install jupyterhub
+```
 2. If running under privileged account
 --------------------------------------
 
 Create privileged user, add to sudoers, allow shadow file access
+```
+useradd jupyterhub
+usermod -a -G shadow jupyterhub
 
-# useradd jupyterhub
-# usermod -a -G shadow jupyterhub
-
-# visudo
-
+visudo
+```
 ===================================================
 # the command(s) the Hub can run on behalf of the above users without needing a password
 # the exact path may differ, depending on how sudospawner was installed
