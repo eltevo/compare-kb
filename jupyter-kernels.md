@@ -11,9 +11,13 @@ https://github.com/IRkernel/IRkernel
 
 3. Install octave
 
-# apt-get install octave liboctave-dev
-# pip3 install octave-kernel
+```bash
+apt-get install octave liboctave-dev
+pip3 install octave-kernel
+```
 
 From octave:
-> pkg install -forge struct
-> pkg install -forge database
+```bash
+pkg install -forge struct
+pkg install -forge database
+```
