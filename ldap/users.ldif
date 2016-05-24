@@ -1,0 +1,3 @@
+dn: ou=Users,dc=compare,dc=vo,dc=elte,dc=hu
+objectClass: organizationalUnit
+ou: Users
