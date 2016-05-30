@@ -18,13 +18,16 @@ In order to use the **Dashboard Layout and Preview** for arranging notebook outp
 3. Serving notebook-defined dashboards as standalone web apps *jupyter-incubator/dashboards_server*
 
 
-## Install 1. and 2.
+## Install 1. and 2. into the notebook image
 The appropriate docker file is *nbdashboard/Dockerfile-dashb-declwidgets-notebook* 
 
 ## Install 3.
+This will build a kernel gateway and server image
 
 Download the https://github.com/jupyter-incubator/dashboards_server
 ```
+cd dashboards_server/
+
 
 ```
 
