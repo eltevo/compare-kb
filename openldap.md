@@ -10,7 +10,9 @@ First of all, LDAP is very likely filtered on the network so it has to be config
 
     # mkdir /data/data1/compare/srv/ldap/etc
     # mkdir /data/data1/compare/srv/ldap/var
-    # docker run -d --net testnet -p 666:389 --name compare-ldap -v /data/data1/compare/srv/ldap/etc:/etc/ldap -v /data/data1/compare/srv/ldap/var:/var/lib/ldap -e SLAPD_PASSWORD=alma -e SLAPD_DOMAIN=compare.vo.elte.hu dinkel/openldap
+    # docker run -d --net testnet -p 666:389 --name compare-ldap -v /data/data1/compare/srv/ldap/etc:/etc/ldap -v /data/data1/compare/srv/ldap/var:/var/lib/ldap -e SLAPD_PASSWORD=alma -e SLAPD_CONFIG_PASSWORD=alma -e SLAPD_DOMAIN=compare.vo.elte.hu dinkel/openldap
+
+It's important to set both SLAPD_PASSWORD and SLAPD_CONFIG_PASSWORD to be able to add schemas to LDAP.
 
 Test is the service is listening on the internal network. The port should be in the state 'open'
 

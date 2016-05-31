@@ -1,4 +1,4 @@
-dn: uid=dobos,ou=Users,dc=compare,dc=vo,dc=elte,dc=hu
+dn: uid=test,ou=users,dc=compare,dc=vo,dc=elte,dc=hu
 objectClass: simpleSecurityObject
 objectClass: organizationalPerson
 objectClass: person
@@ -6,25 +6,26 @@ objectClass: top
 objectClass: inetOrgPerson
 objectClass: posixAccount
 objectClass: shadowAccount
-uid: dobos
-sn: Dobos
-givenName: László
-cn: László Dobos
-displayName: László Dobos
+objectClass: pwmUser
+uid: test
+sn: Test
+givenName: Testing
+cn: Test Testing
+displayName: Test Testing
 uidNumber: 10000
 gidNumber: 10000
 userPassword: alma
-gecos: Laszlo Dobos
+gecos: Test Testing
 loginShell: /bin/bash
-homeDirectory: /home/dobos
-mail: dobos@complex.elte.hu
+homeDirectory: /home/test
+mail: test@complex.elte.hu
 telephoneNumber: 000-000-0000
 st: BP
-manager: uid=dobos,ou=Users,dc=compare,dc=vo,dc=elte,dc=hu
+manager: uid=test,ou=users,dc=compare,dc=vo,dc=elte,dc=hu
 shadowExpire: -1
 shadowFlag: 0
 shadowWarning: 7
 shadowMin: 8
 shadowMax: 999999
 shadowLastChange: 10877
-title: System Administrator
+title: Test User
