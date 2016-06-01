@@ -26,11 +26,8 @@ Masik docker-engine-n
 service docker stop
 vim /etc/default/docker
 #Add the following
-DOCKER_OPTS="--cluster-store=consul://$ipconsul:8500 --cluster-advertise=<ipmanager>:2735"
+DOCKER_OPTS="--cluster-store=consul://157.181.172.106:8500 --cluster-advertise=157.181.172.106:2375 -H tcp://157.181.172.106:2375 -H unix:///var/run/docker.sock"
 service docker start 
-
-# !!!! A fenti lehet, h nem jol van beallitva ezert manualisan inditjuk a daemont
-docker daemon -H unix:///var/run/docker.sock -H tcp://0.0.0.0:2375 --cluster-store=consul://157.181.172.106:8500 --cluster-advertise=0.0.0.0:2375
 
 # Manager inditas
 docker run -d -p 4000:4000 swarm manage -H :4000 --advertise 157.181.172.106:4000 consul://157.181.172.106:8500
@@ -40,4 +37,22 @@ docker run -d swarm join --advertise=157.181.172.106:2375 consul://157.181.172.1
 
 #Check
 docker -H 157.181.172.106:4000 info
+```
+
+### Ujabb node hozzadasa (Gawain.elte.hu-n levo virtualbox)
+```bash
+#daemon le
+/etc/init.d/docker stop
+
+/var/lib/boot2docker/profile
+DOCKER_OPTS="--cluster-store=consul://157.181.172.106:8500 --cluster-advertise=157.181.172.83:8850 -H tcp://0.0.0.0:8850 -H unix:///var/run/docker.sock"
+
+#Itt meg a /etc/init.d/docker -bol ki kellett kommentelni par dolgot HA TLS nelkul akartuk inditani
+
+#daemon fel
+/etc/init.d/docker start
+
+#node inditas
+docker run -d swarm join --advertise=157.181.172.83:8850 consul://157.181.172.106:8500
+
 ```
