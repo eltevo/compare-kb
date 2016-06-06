@@ -52,3 +52,43 @@ Users are authenticated from LDAP, however:
 * LDAP groups are supported in the Enterprise Edition only
 
     https://gitlab.com/gitlab-org/gitlab-ce/blob/master/doc/administration/auth/ldap.md
+	
+# Gitlab API
+
+Authenticate user and get a session token:
+
+    $ curl -X POST "http://172.20.0.4/gitlab/api/v3/session?login=root&password=Almafa137"
+
+
+# Administering Gitlab via its consoles
+
+## Gitlab dbconsole
+
+    # docker exec -it compare-gitlab bash
+	# gitlab-rails dbconsole
+	> SELECT username FROM users;
+
+## Gitlab ruby console
+
+    # docker exec -it compare-gitlab bash
+	# gitlab-rails console
+	> User.find("test")
+
+Adding a new user with ldap identity
+
+	u = User.new
+	u.name = "Test Testing"
+	u.username = "test"
+	u.password = "almafa137"
+	u.email = "dobos@complex.elte.hu"
+	u.confirmed_at = Time.now
+	u.confirmation_token = nil
+	u.save!
+
+	i = Identity.new
+	i.provider = "ldapmain"
+	i.extern_uid = "uid=test,ou=users,dc=compare,dc=vo,dc=elte,dc=hu"
+	i.user = u
+	i.user_id = u.id
+	i.save!
+
