@@ -56,3 +56,19 @@ DOCKER_OPTS="--cluster-store=consul://157.181.172.106:8500 --cluster-advertise=1
 docker run -d swarm join --advertise=157.181.172.83:8850 consul://157.181.172.106:8500
 
 ```
+
+
+# TLS-sel
+
+Docker config modositasa, ahol a $nodeip az adott gep ip cime :
+```bash
+DOCKER_OPTS="--cluster-store=consul://$consulip:8500 \
+             --cluster-advertise=$nodeip:2376 \
+             -H tcp://$nodeip:2376 \
+             -H unix:///var/run/docker.sock \
+             --tlsverify \
+             --tlscacert=/root/.docker/ca.pem \
+             --tlscert=/root/.docker/server-cert.pem \
+             --tlskey=/root/.docker/server-key.pem \
+             --ip-forward=true "
+```
