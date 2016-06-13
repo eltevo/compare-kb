@@ -3,7 +3,7 @@
 
 Configure NTP
 
-# apt-get install ntp
+    # apt-get install ntp
 
 edit /etc/ntp.conf if necessary
 
@@ -12,60 +12,60 @@ Setup samba
 https://help.ubuntu.com/community/ActiveDirectoryWinbindHowto
 https://raymii.org/s/tutorials/SAMBA_Share_with_Active_Directory_Login_on_Ubuntu_12.04.html
 
-# apt-get install samba winbind libnss-winbind libpam-winbind
+    # apt-get install samba winbind libnss-winbind libpam-winbind
 
 /etc/samba/smb.conf should look like:
 
 ==============================================================
-# /etc/samba/smb.conf
-[global]
-
-# machine name and domain settings
+  # /etc/samba/smb.conf
+  [global]
+  
+  # machine name and domain settings
   security=ADS
   realm=VO.ELTE.HU
   workgroup = VO
   netbios name=RETDB02
   auth methods=winbind
-
-# uid - sid mapping
+  
+  # uid - sid mapping
   idmap config * : backend = rid
   idmap config * : range = 100000-500000
-
-# winbind config
+  
+  # winbind config
   winbind enum users = yes
   winbind enum groups = yes
   winbind nested groups = no
   winbind expand groups = 4
   winbind use default domain = Yes
   winbind refresh tickets = Yes
-
-# user home directories
+  
+  # user home directories
   template homedir = /home/%U
   template shell = /bin/bash
-;  template primary group = @lxuser
-
-# authentication settings
+  ;  template primary group = @lxuser
+  
+  # authentication settings
   client use spnego = yes
   client ntlmv2 auth = no
   encrypt passwords = yes
   restrict anonymous = 2
   users = @lxadm @lxuser
-
-# kerberos settings
+  
+  # kerberos settings
   kerberos method = secrets and keytab
   dedicated keytab file = /etc/krb5.keytab
-
-# global share settings
+  
+  # global share settings
   read only=no
   unix extensions = no
-
-[data]
+  
+  [data]
   path=/data
   valid users= @lxadm @lxuser
   writable=yes
   read only=no
   browseable = yes
-
+  
   wide links=yes
   follow symlinks = yes
   unix extensions = no
