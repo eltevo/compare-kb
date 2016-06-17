@@ -16,7 +16,7 @@ https://raymii.org/s/tutorials/SAMBA_Share_with_Active_Directory_Login_on_Ubuntu
 
 /etc/samba/smb.conf should look like:
 
-==============================================================
+```/etc/samba/smb.conf
   # /etc/samba/smb.conf
   [global]
   
@@ -69,7 +69,7 @@ https://raymii.org/s/tutorials/SAMBA_Share_with_Active_Directory_Login_on_Ubuntu
   wide links=yes
   follow symlinks = yes
   unix extensions = no
-==============================================================
+```
 
 winbind refresh tickets = yes will automatically refresh kerberos tickets
 for long user sessions
