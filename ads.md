@@ -17,58 +17,58 @@ https://raymii.org/s/tutorials/SAMBA_Share_with_Active_Directory_Login_on_Ubuntu
 /etc/samba/smb.conf should look like:
 
 ```/etc/samba/smb.conf
-  # /etc/samba/smb.conf
-  [global]
-  
-  # machine name and domain settings
-  security=ADS
-  realm=VO.ELTE.HU
-  workgroup = VO
-  netbios name=RETDB02
-  auth methods=winbind
-  
-  # uid - sid mapping
-  idmap config * : backend = rid
-  idmap config * : range = 100000-500000
-  
-  # winbind config
-  winbind enum users = yes
-  winbind enum groups = yes
-  winbind nested groups = no
-  winbind expand groups = 4
-  winbind use default domain = Yes
-  winbind refresh tickets = Yes
-  
-  # user home directories
-  template homedir = /home/%U
-  template shell = /bin/bash
-  ;  template primary group = @lxuser
-  
-  # authentication settings
-  client use spnego = yes
-  client ntlmv2 auth = no
-  encrypt passwords = yes
-  restrict anonymous = 2
-  users = @lxadm @lxuser
-  
-  # kerberos settings
-  kerberos method = secrets and keytab
-  dedicated keytab file = /etc/krb5.keytab
-  
-  # global share settings
-  read only=no
-  unix extensions = no
-  
-  [data]
-  path=/data
-  valid users= @lxadm @lxuser
-  writable=yes
-  read only=no
-  browseable = yes
-  
-  wide links=yes
-  follow symlinks = yes
-  unix extensions = no
+# /etc/samba/smb.conf
+[global]
+
+# machine name and domain settings
+security=ADS
+realm=VO.ELTE.HU
+workgroup = VO
+netbios name=RETDB02
+auth methods=winbind
+
+# uid - sid mapping
+idmap config * : backend = rid
+idmap config * : range = 100000-500000
+
+# winbind config
+winbind enum users = yes
+winbind enum groups = yes
+winbind nested groups = no
+winbind expand groups = 4
+winbind use default domain = Yes
+winbind refresh tickets = Yes
+
+# user home directories
+template homedir = /home/%U
+template shell = /bin/bash
+;  template primary group = @lxuser
+
+# authentication settings
+client use spnego = yes
+client ntlmv2 auth = no
+encrypt passwords = yes
+restrict anonymous = 2
+users = @lxadm @lxuser
+
+# kerberos settings
+kerberos method = secrets and keytab
+dedicated keytab file = /etc/krb5.keytab
+
+# global share settings
+read only=no
+unix extensions = no
+
+[data]
+path=/data
+valid users= @lxadm @lxuser
+writable=yes
+read only=no
+browseable = yes
+
+wide links=yes
+follow symlinks = yes
+unix extensions = no
 ```
 
 winbind refresh tickets = yes will automatically refresh kerberos tickets
@@ -88,17 +88,16 @@ https://www.samba.org/samba/docs/man/manpages-3/idmap_rid.8.html
 ID = RID - BASE_RID + LOW_RANGE_ID.
 RID = ID + BASE_RID - LOW_RANGE_ID
 
-# service winbind restart
-# service samba restart
+    # service winbind restart
+    # service samba restart
 
 Install kerberos
 
-# apt-get install krb5-user
+    # apt-get install krb5-user
 
 Edit /etc/krb5.conf, setup VO.ELTE.HU domain with BLACKHOLE.VO.ELTE.HU
 
-
-==================================================================
+```
 [libdefaults]
         default_realm = VO.ELTE.HU
 [realms]
@@ -118,48 +117,47 @@ Edit /etc/krb5.conf, setup VO.ELTE.HU domain with BLACKHOLE.VO.ELTE.HU
         }
 [domain_realm]
         vo.elte.hu = VO.ELTE.HU
-
-==================================================================
+```
 
 Test kerberos
 
-# kinit dobos
+    # kinit dobos
 
 This should ask for a password for dobos@VO.ELTE.HU
 
-# klist
+    # klist
 
 Test your server status
 
-# testparm -s
+    # testparm -s
 
 Server role should be ROLE_DOMAIN_MEMBER
 
 Join the domain
 
-# net ads join -U dobos
+    # net ads join -U dobos
 
 At this point you can navigate to \\RETDB02 from a windows machine and get prompted for a password
 
 Try get user entry using getent
 
-# getent passwd dobos
+    # getent passwd dobos
 
 If you get the wrong UID, just flush
 
-# net cache flush
+    # net cache flush
 
 Make sure the machine account exists and keytab is present
 
-# klist -ke
+    # klist -ke
 
 The following should authenticate using the keytab
 
-# kinit -k RETDB02$
+    # kinit -k RETDB02$
 
 To get a TGT for the machine account
 
-# net ads kerberos kinit -P
+    # net ads kerberos kinit -P
 
 5. Configure PAM to authenticate from domain
 --------------------------------------------
@@ -167,7 +165,7 @@ To get a TGT for the machine account
 Configure NSS, this is how passwd, hosts etc. are resolved. Winbind should be on
 the list for passwd etc. to provide user data based on ADS.
 
-==============================================================
+```
 # /etc/nsswitch.conf
 #
 # Example configuration of GNU Name Service Switch functionality.
@@ -187,22 +185,24 @@ ethers:         db files
 rpc:            db files
 
 netgroup:       nis
-==============================================================
+```
 
 Configure PAM, see
 https://www.samba.org/samba/docs/man/Samba-HOWTO-Collection/winbind.html
 
 Basically, just running pam-auth-update end enabling winbind will do.
 
-# pam-auth-update
+    # pam-auth-update
 
 See if /lib/x86_64-linux-gnu/security/pam_winbind.so exists
 
 Check /etc/pam.d/samba and its includes:
 
+```
 @include common-auth
 @include common-account
 @include common-session-noninteractive
+```
 
 make sure pam_winbind.so is in the lists
 
@@ -215,14 +215,14 @@ Restrict login to users of the lxuser group
 
 edit /etc/security/access.conf
 
-==============================================================
+```
 + : @adm : ALL
 + : @user : ALL
 + : @lxadm : ALL
 + : #lxuser : ALL
 
 - : ALL : ALL
-==============================================================
+```
 
 We need a kerberos ticket during login to be able to mount the home directory.
 
@@ -238,9 +238,8 @@ Important options:
 To restrict users to a given group that can login using an active directory account,
 add: require_membership_of = VO\lxuser
 
-=======================================================================
+```
 # /etc/security/pam_winbind.conf
-
 [global]
 
 ;debug = no
@@ -252,5 +251,4 @@ require_membership_of = VO\lxuser
 warn_pwd_expire = 14
 ;silent = no
 ;mkhomedir = no
-
-=======================================================================
+```
