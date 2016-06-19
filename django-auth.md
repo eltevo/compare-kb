@@ -33,6 +33,7 @@ class auth(object):
 
 Add as a backend in settings.py
 
+```
 SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
 
 AUTHENTICATION_BACKENDS = (
@@ -42,3 +43,4 @@ AUTHENTICATION_BACKENDS = (
     #'allauth.account.auth_backends.AuthenticationBackend',
     'kooplexhub.gitlab.auth'
 )
+```
