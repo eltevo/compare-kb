@@ -19,8 +19,12 @@ Install extra images
 Install, start and verify
 
     # apt-get install docker-engine
-    # sudo service docker start
-    sudo docker run hello-world
+    # service docker start
+    # docker run hello-world
+    
+## Run docker from the command line, listen on port
+
+    # docker daemon -H 0.0.0.0:5555 &
 
 ## Move images to a custom directory
 
