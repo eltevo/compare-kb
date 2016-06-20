@@ -24,9 +24,9 @@ In order to use the **Dashboard Layout and Preview** for arranging notebook outp
 DASHBOARD_SERVER_IP
 HTTP_PORT=3000
 HTTPS_PORT=3001
-DASHBOARD_CONTAINER_NAME:=dashserver_cont
-DASHBOARD_IMAGE_NAME:=$DASHBOARD_CONTAINER_NAME
-DASHBOARD_SERVER_LINK?=http://$dashboard_server_ip:$HTTP+PORT
+DASHBOARD_CONTAINER_NAME=dashserver_cont
+DASHBOARD_IMAGE_NAME=dashserver
+DASHBOARD_SERVER_LINK?=http://$dashboard_server_ip:$HTTP_PORT
 
 KG_IP=157.181.172.106
 KG_PORT=8888
@@ -40,15 +40,18 @@ KG_CONTAINER_NAME:=kernel-gateway
 
 ## Install 1. and 2. into the notebook image
 The appropriate docker file is *nbdashboard/Dockerfile-dashb-declwidgets-notebook* 
-Run the notebook server:
+Run the jupyter notebook server:
 ```bash
+docker run -it -p 8882:8888  --name dashnote notebook-wdashboard-image???? bash
+
+#export DASHBOARD_REDIRECT_URL=http://$DASHBOARD_SERVER_IP:???/; \
+
 export DASHBOARD_SERVER_URL=http://$DASHBOARD_SERVER_IP:$HTTP_PORT;\
-export DASHBOARD_REDIRECT_URL=http://$DASHBOARD_SERVER_IP:8057/; \
 export DASHBOARD_SERVER_AUTH_TOKEN=notebook_to_dashboard_secret; \
 start-notebook.sh \
 "--NotebookApp.base_url={base_path} \
 --ip=0.0.0.0 \
---port={port} \
+--port=8888 \
 --NotebookApp.trust_xheaders=True"
 ```
 
@@ -75,25 +78,24 @@ Create Server image and run it
 ```bash
 docker build -t dashserver -f Dockerfile.server .
 
-docker run \
-        --name $DASHBOARD_CONTAINER_NAME \
-        -p $HTTP_PORT:$HTTP_PORT \
-        -p $HTTPS_PORT:$HTTPS_PORT \
-        -p 9711:8080 \
-        -e USERNAME=$USERNAME \
-        -e PASSWORD=$PASSWORD \
-        -e PORT=$HTTP_PORT \
-        -e HTTPS_PORT=$HTTPS_PORT \
-        -e HTTPS_KEY_FILE=$HTTPS_KEY_FILE \
-        -e HTTPS_CERT_FILE=$HTTPS_CERT_FILE \
-        -e SESSION_SECRET_TOKEN=$SESSION_SECRET_TOKEN \
-        -e PUBLIC_LINK=$DASHBOARD_SERVER_LINK
-       -it --rm \
-        -e KERNEL_GATEWAY_URL=$KERNEL_GATEWAY_URL \
-        -e KG_AUTH_TOKEN=$KG_AUTH_TOKEN \
-        -e KG_BASE_URL=$KG_BASE_URL \
-        --link $KG_CONTAINER_NAME:$KG_CONTAINER_NAME \
-        $DASHBOARD_IMAGE_NAME $CMD
+docker run -d  --name $DASHBOARD_CONTAINER_NAME \
+           -p $HTTP_PORT:$HTTP_PORT \
+           -p $HTTPS_PORT:$HTTPS_PORT \
+           -p 9711:8080 \
+           -e USERNAME=testu \
+           -e PASSWORD=testu \
+           -e PORT=$HTTP_PORT \
+           -e HTTPS_PORT=$HTTPS_PORT \
+           -e HTTPS_KEY_FILE=$HTTPS_KEY_FILE \
+           -e HTTPS_CERT_FILE=$HTTPS_CERT_FILE \
+           -e SESSION_SECRET_TOKEN=$SESSION_SECRET_TOKEN \
+           -e PUBLIC_LINK=$DASHBOARD_SERVER_LINK \
+           -e KERNEL_GATEWAY_URL=$KERNEL_GATEWAY_URL \
+           -e KG_AUTH_TOKEN=$KG_AUTH_TOKEN \
+           -e KG_BASE_URL=$KG_BASE_URL \
+           --link $KG_CONTAINER_NAME:$KG_CONTAINER_NAME \
+           $DASHBOARD_IMAGE_NAME $CMD
+
 ```
 
 I had to separate the apt-get update from the rest of the installation and add 'exit 0' so in case the update fails the docker script continues.
