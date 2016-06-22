@@ -1,5 +1,11 @@
 # Cofiguring and NFS server using docker image
 
+Since the nfs server is a kernel module, the *host* must have the necessary packages for any docker to run an nfs server:
+
+    # apt-get install nfs-server
+
+Then simply
+
     #  docker run -d --name compare-nfs --net testnet --privileged -v /data/data1/compare/srv/nfs/home:/home cpuguy83/nfs-server /home
 
 Once it is listening on the network, try to access it by mounting on the host
