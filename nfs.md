@@ -3,6 +3,8 @@
 Since the nfs server is a kernel module, the *host* must have the necessary packages for any docker to run an nfs server:
 
     # apt-get install nfs-server
+    
+Also, containers mounting the nfs share must run with the --privileged flag otherwise mount.nfs will throw and Operation not permitted error.
 
 Then simply
 
