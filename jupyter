@@ -1,0 +1,11 @@
+# Jupyter and NFS
+
+Jupyter uses sqlite to store history. Sqlite doesn't like NFS, so history file needs to be moved somewhere else:
+
+* https://github.com/ipython/ipython/issues/2426/
+
+In jupyter_notebook_config.py:
+
+```
+c.HistoryManager.hist_file = '/tmp/ipython_hist.sqlite'
+```
