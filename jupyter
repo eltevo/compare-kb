@@ -9,3 +9,35 @@ In jupyter_notebook_config.py:
 ```
 c.HistoryManager.hist_file = '/tmp/ipython_hist.sqlite'
 ```
+
+# Jupyter and nginx
+
+This is the correct reverse-proxy configuration for websockets to work:
+
+```
+server {
+  listen 80;
+  server_name dobos.compare.vo.elte.hu;
+  client_max_body_size 20M;
+
+  location /gitlab {
+    proxy_set_header Host $http_host;
+    proxy_pass http://172.20.0.5;
+  }
+
+  location /notebook {
+    proxy_set_header      Host $http_host;
+    proxy_pass            http://172.20.0.9:8000;
+  }
+
+  location ~* /notebook/[^/]+/[^/]+/(api/kernels/[^/]+/(channels|iopub|shell|stdin)|terminals/websocket)/? {
+    proxy_pass            http://172.20.0.9:8000;
+    proxy_http_version    1.1;
+    proxy_set_header      Host $http_host;
+    proxy_set_header      Upgrade $http_upgrade;
+    proxy_set_header      Connection "upgrade";
+    proxy_read_timeout    86400;
+  }
+}
+
+```
