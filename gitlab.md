@@ -103,3 +103,11 @@ Which corresponds to
     # chmod 600 /etc/gitlab/ssh_host_*
     
 when executed from inside the container.
+
+To run git non-interactively and authenticate with a key
+
+* remove password from the keyfile
+
+    $ ssk-keyget -p -f keyfile
+
+* trust the server key - the easiest is to start an ssh session from a terminal and answer yes, but it's manual. Need to find an automatic way.
