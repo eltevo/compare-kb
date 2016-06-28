@@ -108,6 +108,23 @@ To run git non-interactively and authenticate with a key
 
 * remove password from the keyfile
 
-    $ ssk-keyget -p -f keyfile
+    $ ssk-keygen -p -f keyfile
 
 * trust the server key - the easiest is to start an ssh session from a terminal and answer yes, but it's manual. Need to find an automatic way.
+
+The gitlab-shell might not be configured correctly. Check these:
+
+* /etc/passwd has /bin/sh as the default command for the user 'git'
+* /etc/pam.d/sshd has the following entry:
+
+    session    optional     pam_loginuid.so
+
+instead of the default
+
+    session    required     pam_loginuid.so
+    
+* git needs to be called with a tricky env variable to use an SSH key to connect to the server:
+
+    $ GIT_SSH_COMMAND="ssh -v -i '/srv/kooplex/compare/home/test/.ssh/gitlab.key' -p 23" git clone ssh://git@pollux-ubuntu:/test/alma.git test
+    
+the ssh command will be executed and git will add the user@server part (sometimes the port) and the commands executed. If you get a disallowed command or similar, always check the verbose output of ssh -v in a terminal, it will print the command that could not be executed.
