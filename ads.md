@@ -252,3 +252,15 @@ warn_pwd_expire = 14
 ;silent = no
 ;mkhomedir = no
 ```
+
+ # Accessing samba shares (cifs) as root
+ 
+ When running sudo, the root account and user settings get mixed and the root user will attempt to use
+ the user's kerberos ticket cache and eventually changes the ownership of the cache. To access windows
+ shares using the computer account (MACHINENAME$), this needs to be added to /root/.bashrc:
+ 
+ ```
+ # Switch kerberos cache and use machine account
+export KRB5CCNAME=FILE:/tmp/krb5cc_`id -u`
+net ads kerberos kinit -P
+ ```
