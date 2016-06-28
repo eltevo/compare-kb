@@ -92,3 +92,14 @@ Adding a new user with ldap identity
 	i.user_id = u.id
 	i.save!
 
+# Accessing gitlab with SSH
+
+Make sure that key permission are restrictive enough, otherwise sshd will not start inside the container:
+
+    # chmod 600 /srv/kooplex/compare/gitlab/etc/ssh_host_*
+    
+Which corresponds to
+
+    # chmod 600 /etc/gitlab/ssh_host_*
+    
+when executed from inside the container.
