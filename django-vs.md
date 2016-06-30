@@ -6,6 +6,12 @@ It comes with excellent support for .Net. Developer web installer will install V
 
 	conda install mysql-connector-python
 	conda install pymysql
+	
+And download a binary wheel from http://www.lfd.uci.edu/~gohlke/pythonlibs/#mysqlclient for mysqlclient:
+
+mysqlclient-1.3.7-cp35-cp35m-win_amd64.whl
+
+
 
 ## Create new project
 
