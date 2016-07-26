@@ -118,6 +118,9 @@ The gitlab-shell might not be configured correctly. Check these:
 * /etc/pam.d/sshd has the following entry:
 
     session    optional     pam_loginuid.so
+    
+This second option is required if git reports a protocol error. That means that the server is responding with a
+generic welcome message instead of executing the requested program.
 
 instead of the default
 
