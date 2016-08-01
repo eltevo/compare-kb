@@ -131,3 +131,7 @@ instead of the default
     $ GIT_SSH_COMMAND="ssh -v -i '/srv/kooplex/compare/home/test/.ssh/gitlab.key' -p 23" git clone ssh://git@pollux-ubuntu:/test/alma.git test
     
 the ssh command will be executed and git will add the user@server part (sometimes the port) and the commands executed. If you get a disallowed command or similar, always check the verbose output of ssh -v in a terminal, it will print the command that could not be executed.
+
+# Rendnering notebooks on gitlab
+This [link](https://gist.github.com/martijnvermaat/6926070) contains some configurtion options enabling gitlab to rendner jupyter notebook.
+
