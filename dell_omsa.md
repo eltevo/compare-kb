@@ -25,15 +25,15 @@ Without being admin you can't manage virtual disks etc.
 
 Start services
 
-$ sudo service dsm_om_connsvc start
-$ sudo service dataeng start
+    $ sudo service dsm_om_connsvc start
+    $ sudo service dataeng start
 
 Visit https://<ip_address>:1311/ for admin interface
 
 Setup service to run at boot
 
-$ sudo update-rc.d dsm_om_connsvc defaults
+    $ sudo update-rc.d dsm_om_connsvc defaults
 
 Update iptable to grant access to OMSA from local subnet
 
-$ sudo iptable -I INPUT 1 -s 157.181.172.0/8 -p tcp --dport 1311 -j ACCEPT
+    $ sudo iptable -I INPUT 1 -s 157.181.172.0/8 -p tcp --dport 1311 -j ACCEPT
