@@ -3,21 +3,24 @@
 
 http://linux.dell.com/repo/community/ubuntu/
 
-$ sudo echo 'deb http://linux.dell.com/repo/community/ubuntu precise openmanage' | sudo tee -a /etc/apt/sources.list.d/linux.dell.com.sources.list 
+    $ sudo echo 'deb http://linux.dell.com/repo/community/ubuntu precise openmanage' | sudo tee -a /etc/apt/sources.list.d/linux.dell.com.sources.list 
 
 replace precise with trusty etc.
 
-$ sudo apt-get update
-$ sudo apt-get install srvadmin-all
+    $ sudo apt-get update
+    $ sudo apt-get install srvadmin-all
 
 Add users to /opt/dell/srvadmin/etc/omarolemap 
 
-john_doe     *     Administrator
+    john_doe     *     Administrator
 
 IMPORTANT:
 
 There's a bug in OMSA that logs you into the wrong role, even though you're and admin.
-Fix this by  sudo chmod 0640 /etc/opt/dell/srvadmin/omarolemap
+Fix this by 
+
+    $ sudo chmod 0640 /opt/dell/srvadmin/etc/omarolemap
+
 Without being admin you can't manage virtual disks etc.
 
 Start services
