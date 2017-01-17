@@ -25,6 +25,30 @@ Install, start and verify
 ## Run docker from the command line, listen on port
 
     # docker daemon -H 0.0.0.0:5555 &
+    
+## Change docker daemon start options (U14.04, U16.04)
+
+Create file /etc/systemd/system/docker.service.d/docker.conf with content:
+
+```
+[Unit]
+Description=Docker Application Container Engine
+Documentation=https://docs.docker.com
+After=network.target docker.socket
+Requires=docker.socket
+
+[Service]
+EnvironmentFile=-/etc/default/docker
+ExecStart=
+ExecStart=/usr/bin/docker daemon $DOCKER_OPTS -H tcp://0.0.0.0:5555 -H unix:///var/run/docker.sock
+MountFlags=slave
+LimitNOFILE=1048576
+LimitNPROC=1048576
+LimitCORE=infinity
+
+[Install]
+WantedBy=multi-user.target
+```
 
 ## Move images to a custom directory
 
