@@ -36,4 +36,4 @@ Rules to access Dell OpenManage from local networks (complex, itl)
 
 Save settings so they will be applied at next boot.
 
-# service iptables-persistent save
+# service netfilter-persistent save
