@@ -49,6 +49,7 @@ LimitCORE=infinity
 [Install]
 WantedBy=multi-user.target
 ```
+if we want to change the directory of images then use "-g /mnt/tmp"
 
 ## Move images to a custom directory
 
