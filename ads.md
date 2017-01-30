@@ -12,7 +12,7 @@ Setup samba
 https://help.ubuntu.com/community/ActiveDirectoryWinbindHowto
 https://raymii.org/s/tutorials/SAMBA_Share_with_Active_Directory_Login_on_Ubuntu_12.04.html
 
-    # apt-get install samba winbind libnss-winbind libpam-winbind
+    # apt-get install samba winbind libnss-winbind libpam-winbind nslcd
 
 /etc/samba/smb.conf should look like:
 
