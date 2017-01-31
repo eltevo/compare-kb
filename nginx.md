@@ -30,6 +30,34 @@ Test if you see the nginc welcome page, then make a backup of /etc/nginx/sites-a
       proxy_set_header      Connection \"upgrade\";
       proxy_read_timeout    86400;
     }
+    
+# Customize error messages to include proxy server name (for debugging)
+
+In any server section, add:
+
+    error_page 502 /502.html;
+
+    location = /502.html {
+      root /var/www/nginx/;
+    }
+    
+Put error page 502.html under /var/www/nginx/ with content:
+
+```
+<html>
+<head><title>502 Bad Gateway</title></head>
+<body bgcolor="white">
+<center><h1>502 Bad Gateway: pollux-ubuntu</h1></center>
+<hr><center>nginx/1.10.0 (Ubuntu)</center>
+</body>
+</html>
+<!-- a padding to disable MSIE and Chrome friendly error page -->
+<!-- a padding to disable MSIE and Chrome friendly error page -->
+<!-- a padding to disable MSIE and Chrome friendly error page -->
+<!-- a padding to disable MSIE and Chrome friendly error page -->
+<!-- a padding to disable MSIE and Chrome friendly error page -->
+<!-- a padding to disable MSIE and Chrome friendly error page -->
+```
 
 # Installing nginx in a docker container
 
