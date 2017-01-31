@@ -20,6 +20,16 @@ Test if you see the nginc welcome page, then make a backup of /etc/nginx/sites-a
     }
 ===============================================================
 
+# Enable websockets etc for notebooks
+
+    location ~* /notebook/[^/]+/[^/]+/(api/kernels/[^/]+/(channels|iopub|shell|stdin)|terminals/websocket)/? {
+      proxy_pass            http://$PROXYIP:8000;
+      proxy_http_version    1.1;
+      proxy_set_header      Host \$http_host;
+      proxy_set_header      Upgrade \$http_upgrade;
+      proxy_set_header      Connection \"upgrade\";
+      proxy_read_timeout    86400;
+    }
 
 # Installing nginx in a docker container
 
