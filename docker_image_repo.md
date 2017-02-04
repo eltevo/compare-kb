@@ -1,4 +1,4 @@
-# Privát image ropository
+# Privat image ropository
 
 On this [link](https://docs.docker.com/registry/) there is a detailed description about private repositorys. 
 
@@ -19,6 +19,6 @@ This exposes port `5000` on the host to be the repository port.
 
 Once the repository container runs it is accesible via usual docker commands as:
 
-```
+```bash
 docker pull localhost:5000/imagename
 ```
