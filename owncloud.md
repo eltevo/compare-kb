@@ -1,3 +1,9 @@
+## Upload SIZE
+In the outer webserver you need to add the following line if nginx
+* client_max_body_size 2000M;
+or something similar if apache
+
+
 TO check webdav client
 download from http://www.webdav.org/neon/litmus/
 
