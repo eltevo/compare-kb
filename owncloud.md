@@ -1,3 +1,9 @@
+TO check webdav client
+download from http://www.webdav.org/neon/litmus/
+
+
+BELOW IS DEPRECATED
+
 #Owncloud to share files and data with each other
 There is a dockerized version on docker-hub, which is complete except for the LDAP libraries for php. So we take the Dockerfile from the 9.0 version and add some extra lines.
 https://hub.docker.com/_/owncloud/
