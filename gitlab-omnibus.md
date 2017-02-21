@@ -18,3 +18,6 @@ Gitlab is written in ruby and uses the rails MVC framework. It requires Ruby 2.1
 Done with bundle and not with make!
 
     $ bundle install
+## Trouble shooting
+when it complained about permissions (and then stopped the container)
+* "docker exec -it compare-gitlab update-permissions"
