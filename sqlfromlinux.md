@@ -1,6 +1,6 @@
 # Access MSSQL Server running on Windows from linux
 
-1. Install prerequisites
+## Install prerequisites
 
     # apt-get install autoconf
     # apt-get install libkrb5-dev
@@ -9,9 +9,9 @@
     # apt-get install libgnutls-dev
     # git clone https://github.com/openssl/openssl
 
-2. Build iodbc from source
+## Build iodbc from source
 
-3. Build unixodbc from source
+## Build unixodbc from source
 
 http://www.unixodbc.org/doc/FreeTDS.html
 
@@ -22,7 +22,7 @@ Use -l switch to add system DSN (kerberos will be used to authenticate individua
 Test with 
     # isql -v future1
 
-3. Build freetds from source
+## Build freetds from source
 
     # git clone https://github.com/FreeTDS/freetds.git
     # cd freetds
@@ -77,7 +77,7 @@ Edit config /usr/local/etc/freetds.conf:
         tds version = 7.4
 ```
 
-4. Configure SQL Server SPNs in active directory
+## Configure SQL Server SPNs in active directory
 
     PS> setspn -A MSSQLSvc/future1.vo.elte.hu:1433 VO\sqlserver
 
@@ -85,9 +85,9 @@ Do it for each server, then verify with
 
     PS> setspn -L VO\sqlserver
 
-5. Test connection
+## Test connection
 
     # tsql -S future1
 
-6. Configuring ODBC data sources
+## Configuring ODBC data sources
 
