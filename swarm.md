@@ -72,3 +72,5 @@ DOCKER_OPTS="--cluster-store=consul://$consulip:8500 \
              --tlskey=/root/.docker/server-key.pem \
              --ip-forward=true "
 ```
+# Swarm mód
+[Ezen](https://github.com/cassinyio/SwarmSpawner) a linken van egy swarmspawner ami az "új" swarm filozófiával indít konténereket
